@@ -17,6 +17,7 @@ import { useClassNames } from './useClassNames'
 import { FaCaretDownIcon } from '../Icon'
 import { useListBox } from './useListBox'
 import { MultiSelectedItem } from './MultiSelectedItem'
+import { MultiOffScreenSelectedLive } from './MultiOffScreenSelectedLive'
 import { Item } from './types'
 
 type Props<T> = {
@@ -141,7 +142,7 @@ export function MultiComboBox<T>({
   const [uncontrolledInputValue, setUncontrolledInputValue] = useState('')
   const inputValue = isInputControlled ? controlledInputValue : uncontrolledInputValue
   const [isComposing, setIsComposing] = useState(false)
-  const selectedLabels = selectedItems.map(({ label }) => label)
+  const selectedLabels = useMemo(() => selectedItems.map(({ label }) => label), [selectedItems])
   const filteredItems = items.filter(({ label }) => {
     if (selectedLabels.includes(label)) return false
     if (!inputValue) return true
@@ -241,15 +242,9 @@ export function MultiComboBox<T>({
           blur()
         }
       }}
-      role="combobox"
-      aria-owns={aria.listBoxId}
-      aria-haspopup="listbox"
-      aria-expanded={isFocused}
-      aria-invalid={error || undefined}
-      aria-disabled={disabled}
     >
       <InputArea themes={theme}>
-        <SelectedList themes={theme}>
+        <SelectedList themes={theme} aria-label="選択済みの項目">
           {selectedItems.map((selectedItem) => (
             <li key={selectedItem.label}>
               <MultiSelectedItem
@@ -271,6 +266,7 @@ export function MultiComboBox<T>({
             </li>
           ))}
         </SelectedList>
+        <MultiOffScreenSelectedLive selectedLabels={selectedLabels} />
 
         <InputWrapper className={isFocused ? undefined : 'hidden'}>
           <Input
@@ -305,6 +301,12 @@ export function MultiComboBox<T>({
               handleInputKeyDown(e)
             }}
             autoComplete="off"
+            role="combobox"
+            aria-owns={aria.listBoxId}
+            aria-haspopup="listbox"
+            aria-expanded={isFocused}
+            aria-invalid={error || undefined}
+            aria-disabled={disabled}
             aria-activedescendant={aria.activeDescendant}
             aria-autocomplete="list"
             aria-controls={aria.listBoxId}

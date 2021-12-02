@@ -95,10 +95,7 @@ export const Single: Story = () => {
           placeholder="入力でフィルタリングできます"
           onSelect={handleSelectItem}
           onClear={handleClear}
-          onChangeSelected={(item) => {
-            action('onChangeSelected')(item)
-            setSelectedItem(item)
-          }}
+          onChangeSelected={action('onChangeSelected')}
           data-test="single-combobox-default"
         />
       </dd>
@@ -213,10 +210,7 @@ export const Multi: Story = () => {
           placeholder="入力でフィルタリングできます"
           onDelete={handleDelete}
           onSelect={handleSelectItem}
-          onChangeSelected={(selected) => {
-            action('onChangeSelected')(selected)
-            setSelectedItems(selected)
-          }}
+          onChangeSelected={action('onChangeSelected')}
           onFocus={action('onFocus')}
           onBlur={action('onBlur')}
           data-test="multi-combobox-default"
@@ -305,10 +299,6 @@ export const Multi: Story = () => {
           placeholder="入力でフィルタリングできます"
           onDelete={handleDelete}
           onSelect={handleSelectItem}
-          onChangeSelected={(selected) => {
-            action('onChangeSelected')(selected)
-            setSelectedItems(selected)
-          }}
           inputValue={controlledInputValue}
           onChangeInput={(e) => {
             setControlledInputValue(e.target.value)
