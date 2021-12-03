@@ -217,13 +217,15 @@ export function MultiComboBox<T>({
     // 選択済みアイテムによってコンボボックスの高さが変わりうるので selectedItems を依存に含める
   }, [calculateDropdownRect, isFocused, selectedItems])
 
+  const disabledClassName = useMemo(() => (disabled ? 'disabled' : ''), [disabled])
+
   return (
     <Container
       {...props}
       themes={theme}
       width={width}
       ref={outerRef}
-      className={`${className} ${classNames.wrapper}`}
+      className={`${className} ${classNames.wrapper} ${disabledClassName}`}
       onClick={(e) => {
         if (
           !hasParentElementByClassName(e.target as HTMLElement, classNames.deleteButton) &&
@@ -315,7 +317,7 @@ export function MultiComboBox<T>({
         </InputWrapper>
 
         {selectedItems.length === 0 && placeholder && !isFocused && (
-          <Placeholder themes={theme} className={classNames.placeholder}>
+          <Placeholder themes={theme} className={`${classNames.placeholder} ${disabledClassName}`}>
             {placeholder}
           </Placeholder>
         )}
@@ -352,8 +354,8 @@ const Container = styled.div<{ themes: Theme; width: number | string }>`
         border-color: ${color.DANGER};
       }
 
-      &[aria-disabled='true'] {
-        background-color: ${color.COLUMN};
+      &.disabled {
+        background-color: ${color.hoverColor(color.WHITE)};
         cursor: not-allowed;
       }
     `
@@ -448,6 +450,10 @@ const Placeholder = styled.p<{ themes: Theme }>`
       color: ${color.TEXT_GREY};
       font-size: ${fontSize.M};
       line-height: ${leading.NONE};
+
+      &.disabled {
+        color: ${color.TEXT_DISABLED};
+      }
     `
   }}
 `
