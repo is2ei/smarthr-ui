@@ -35,8 +35,9 @@ const Wrapper = styled.span<{ themes: Theme }>`
       box-sizing: border-box;
       display: inline-block;
       margin: 0;
-      border: 1px solid transparent;
-      padding: ${spacingByChar(0.25)} ${spacingByChar(0.5)};
+      border: 2px solid transparent;
+      padding: ${spacingByChar(0.25)} calc(${spacingByChar(0.5)} - 1px)
+        calc(${spacingByChar(0.25)} - 2px);
       background-color: ${color.WHITE};
       text-align: center;
       white-space: nowrap;
@@ -57,7 +58,7 @@ const Wrapper = styled.span<{ themes: Theme }>`
 
       &.process {
         border-color: ${color.WARNING};
-        color: ${color.WARNING};
+        color: ${color.TEXT_GREY};
       }
 
       &.required {
