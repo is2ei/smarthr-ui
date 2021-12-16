@@ -17,7 +17,7 @@ import { useClassNames } from './useClassNames'
 import { FaCaretDownIcon } from '../Icon'
 import { useListBox } from './useListBox'
 import { MultiSelectedItem } from './MultiSelectedItem'
-import { MultiOffScreenSelectedLive } from './MultiOffScreenSelectedLive'
+// import { MultiOffScreenSelectedLive } from './MultiOffScreenSelectedLive'
 import { Item } from './types'
 
 type Props<T> = {
@@ -246,7 +246,7 @@ export function MultiComboBox<T>({
       }}
     >
       <InputArea themes={theme}>
-        <SelectedList themes={theme} aria-label="選択済みの項目">
+        <SelectedList themes={theme} aria-label="選択済みの項目" aria-live="polite">
           {selectedItems.map((selectedItem) => (
             <li key={selectedItem.label}>
               <MultiSelectedItem
@@ -268,7 +268,7 @@ export function MultiComboBox<T>({
             </li>
           ))}
         </SelectedList>
-        <MultiOffScreenSelectedLive selectedLabels={selectedLabels} />
+        {/* <MultiOffScreenSelectedLive selectedLabels={selectedLabels} /> */}
 
         <InputWrapper className={isFocused ? undefined : 'hidden'}>
           <Input
