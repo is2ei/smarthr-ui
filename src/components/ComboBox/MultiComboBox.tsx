@@ -18,6 +18,7 @@ import { FaCaretDownIcon } from '../Icon'
 import { useListBox } from './useListBox'
 import { MultiSelectedItem } from './MultiSelectedItem'
 // import { MultiOffScreenSelectedLive } from './MultiOffScreenSelectedLive'
+import { convertMatchableString } from './comboBoxHelper'
 import { Item } from './types'
 
 type Props<T> = {
@@ -146,7 +147,7 @@ export function MultiComboBox<T>({
   const filteredItems = items.filter(({ label }) => {
     if (selectedLabels.includes(label)) return false
     if (!inputValue) return true
-    return label.includes(inputValue)
+    return convertMatchableString(label).includes(convertMatchableString(inputValue))
   })
   const isDuplicate = items.some((item) => item.label === inputValue)
   const hasSelectableExactMatch = filteredItems.some((item) => item.label === inputValue)
