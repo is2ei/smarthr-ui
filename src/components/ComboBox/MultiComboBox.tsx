@@ -233,10 +233,7 @@ export function MultiComboBox<T>({
           !disabled &&
           !isFocused
         ) {
-          // IE対応: 外側クリック判定が完了するまで要素が除去されないようにディレイを入れる
-          setTimeout(() => {
-            focus()
-          }, 0)
+          focus()
         }
       }}
       onKeyDown={(e) => {
